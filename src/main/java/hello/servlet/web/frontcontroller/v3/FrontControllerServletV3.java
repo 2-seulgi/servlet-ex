@@ -28,13 +28,16 @@ public class FrontControllerServletV3 extends HttpServlet {
     protected void service(HttpServletRequest request, HttpServletResponse
             response)
             throws ServletException, IOException {
+
         String requestURI = request.getRequestURI();
         ControllerV3 controller = controllerMap.get(requestURI);
         if (controller == null) {
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
             return;
         }
+
         Map<String, String> paramMap = createParamMap(request);
+
         ModelView mv = controller.process(paramMap);
         String viewName = mv.getViewName();
         MyView view = viewResolver(viewName);
